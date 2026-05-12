@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 import io
 import re
@@ -72,15 +72,116 @@ def extrair_dados_nf(pdf_file):
 
                 return "N/A"
 
-            def extrair_itens_produtos(pdf_obj):
+
+
+
+
+
+
+
+            def extrair_itens_produtos(pdf_obj): 
+        
+        # ========================================================
+    # BLOCO 1.1 — LISTA PRINCIPAL DE ITENS
+    # ========================================================
+    #
+    # Estrutura utilizada:
+    #
+    # [
+    #   (codigo, descricao),
+    #   (codigo, descricao)
+    # ]
+    #
+    # Apesar da função retornar apenas os códigos,
+    # armazenar também a descrição permite:
+    #
+    # - evitar duplicidades incorretas
+    # - futuras expansões do sistema
+    # - validações mais inteligentes
+    # ========================================================
+        
                 itens = []
+                
+    # ========================================================
+    # BLOCO 1.2 — FUNÇÃO INTERNA DE ADIÇÃO SEGURA
+    # ========================================================
+    #
+    # Objetivo:
+    # Centralizar toda a lógica de validação
+    # antes de inserir um item na lista.
+    #
+    # Benefícios:
+    #
+    # - evita duplicidade
+    # - padroniza tratamento
+    # - reduz repetição de código
+    # - melhora manutenção
+    #
+    # Regras aplicadas:
+    #
+    # 1. Limpeza do texto
+    # 2. Código deve ser numérico
+    # 3. Código deve possuir pelo menos 3 dígitos
+    # 4. Não permitir itens duplicados
+    #
+    # Estrutura armazenada:
+    #
+    # (codigo, descricao)
+    # ========================================================          
 
                 def adicionar_item(codigo, descricao):
+                    
+                    
+                    # Remove espaços extras e possíveis ruídos textuais
                     codigo = limpar_texto(codigo)
                     descricao = limpar_texto(descricao)
+                                        
+                    # ====================================================
+                            # BLOCO 1.2.1 — VALIDAÇÃO DO CÓDIGO
+                            # ====================================================
+                            #
+                            # re.fullmatch(r'\d{3,}', codigo)
+                            #
+                            # Garante que:
+                            #
+                            # - o código contenha apenas números
+                            # - tenha no mínimo 3 dígitos
+                            #
+                            # Isso evita capturas incorretas como:
+                            #
+                            # - números pequenos
+                            # - quantidades
+                            # - códigos quebrados
+                            # - textos parcialmente numéricos
+                            # ====================================================                        
+                
                     if codigo and re.fullmatch(r'\d{3,}', codigo):
+                        
+      # ================================================
+            # BLOCO 1.2.2 — VERIFICAÇÃO DE DUPLICIDADE
+            # ================================================
+            #
+            # Objetivo:
+            # Evitar itens repetidos.
+            #
+            # A verificação compara:
+            #
+            # - código
+            # - descrição
+            #
+            # any():
+            # Retorna True se algum item igual existir.
+            #
+            # Caso NÃO exista:
+            # o item será inserido.
+            # ================================================                                           
+                        
                         if not any(item[0] == codigo and item[1] == descricao for item in itens):
                             itens.append((codigo, descricao))
+                            
+                            # continuar aqui 
+                
+                                      
 
                 for page in pdf_obj.pages:
                     for tabela in (page.extract_tables() or []):
