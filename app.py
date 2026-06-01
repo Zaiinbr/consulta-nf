@@ -10,214 +10,337 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- CSS CORPORATIVO PREMIUM (GRAFITE + VERDE SÁLVIA + PLATINA) ---
+# --- CSS MINIMALISTA PREMIUM (COSMOS/LAYERS AESTHETIC) ---
 FUTURISTIC_CSS = """
 <style>
-    /* Paleta de cores premium */
+    /* Paleta ultra-minimalista */
     :root {
-        --bg-app: #12141c;
-        --bg-sidebar: #0e1015;
-        --bg-card: #1e222b;
-        --border-card: #2d333f;
-        --green-mint: #10b981;
-        --text-white: #f8fafc;
-        --text-secondary: #94a3b8;
+        --bg-app: #09090b;
+        --bg-sidebar: #09090b;
+        --bg-card: #141416;
+        --border-line: #222226;
+        --accent: #3ecf9e;
+        --accent-soft: rgba(62, 207, 158, 0.15);
+        --text-white: #f4f4f5;
+        --text-secondary: #a3a3a8;
     }
     
-    /* Background do App */
-    body, .stApp {
-        background: var(--bg-app);
+    /* Animações fluidas */
+    @keyframes fadeInSlide {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes pulseGlow {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(62, 207, 158, 0);
+        }
+        50% {
+            box-shadow: 0 0 0 8px rgba(62, 207, 158, 0.08);
+        }
+    }
+    
+    @keyframes spinSlide {
+        from {
+            opacity: 0;
+            transform: translateY(12px) rotate(-4deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+    }
+    
+    @keyframes floatIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    @keyframes glowBorder {
+        0%, 100% {
+            border-color: var(--border-line);
+            box-shadow: inset 0 0 0 1px var(--border-line);
+        }
+        50% {
+            border-color: rgba(62, 207, 158, 0.4);
+            box-shadow: inset 0 0 0 1px rgba(62, 207, 158, 0.2);
+        }
+    }
+    
+    /* Background */
+    body, .stApp, [data-testid="stAppViewContainer"] {
+        background: var(--bg-app) !important;
+        color: var(--text-white) !important;
+    }
+    
+    /* Texto e tipografia base */
+    * {
         color: var(--text-white);
     }
     
-    /* Títulos clean */
+    /* Títulos */
     h1, h2, h3, h4, h5, h6 {
-        color: var(--text-white);
-        font-weight: 600;
-        letter-spacing: 0px;
+        color: var(--text-white) !important;
+        font-weight: 500;
+        letter-spacing: 0.05em;
     }
     
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background: var(--bg-sidebar);
-        border-right: 1px solid var(--border-card);
+        background: var(--bg-sidebar) !important;
+        border-right: 1px solid var(--border-line);
     }
     
-    /* Botões Primary */
+    /* Markdown text */
+    .stMarkdown p, .stMarkdown span, .stMarkdown a {
+        color: var(--text-white) !important;
+    }
+    
+    /* Botões */
     .stButton > button {
-        background: transparent;
-        border: 1px solid var(--green-mint);
-        color: var(--text-white);
-        border-radius: 6px;
+        background: transparent !important;
+        border: 1px solid var(--border-line) !important;
+        color: var(--text-secondary) !important;
+        border-radius: 4px;
         padding: 10px 24px;
-        font-weight: 600;
-        transition: all 0.2s ease;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
     }
     
     .stButton > button:hover {
-        background: var(--green-mint);
-        color: var(--bg-app);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        background: var(--accent-soft) !important;
+        border-color: var(--accent) !important;
+        color: var(--text-white) !important;
+        transform: scale(1.02) translateY(-2px);
+        box-shadow: 0 8px 24px rgba(62, 207, 158, 0.16);
     }
     
-    /* Download Buttons */
+    .stButton > button:active {
+        transform: scale(0.98) translateY(0);
+    }
+    
+    /* Download buttons */
     [data-testid="stDownloadButton"] > button {
-        background: transparent;
-        border: 1px solid var(--green-mint);
-        color: var(--text-white);
-        font-weight: 600;
-        border-radius: 6px;
-        transition: all 0.2s ease;
+        background: transparent !important;
+        border: 1px solid var(--border-line) !important;
+        color: var(--text-secondary) !important;
+        font-weight: 500;
+        border-radius: 4px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
     }
     
     [data-testid="stDownloadButton"] > button:hover {
-        background: var(--green-mint);
-        color: var(--bg-app);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        background: var(--accent-soft) !important;
+        border-color: var(--accent) !important;
+        color: var(--text-white) !important;
+        transform: scale(1.02) translateY(-2px);
+        box-shadow: 0 8px 24px rgba(62, 207, 158, 0.16);
+    }
+    
+    [data-testid="stDownloadButton"] > button:active {
+        transform: scale(0.98) translateY(0);
     }
     
     /* Inputs */
     .stTextInput > div > div > input,
     .stSelectbox > div > div > select,
     .stFileUploader > div > div > input {
-        background: var(--bg-card);
-        border: 1px solid var(--border-card);
-        color: var(--text-white);
-        border-radius: 6px;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-line) !important;
+        color: var(--text-white) !important;
+        border-radius: 4px;
         padding: 8px 12px;
         font-size: 14px;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
     }
     
     .stTextInput > div > div > input:focus,
     .stSelectbox > div > div > select:focus,
     .stFileUploader > div > div > input:focus {
-        border-color: var(--green-mint);
-        background: var(--bg-card);
-        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+        border-color: var(--accent) !important;
+        background: var(--bg-card) !important;
+        box-shadow: inset 0 0 0 1px rgba(62, 207, 158, 0.18), 0 0 12px rgba(62, 207, 158, 0.12) !important;
+        color: var(--text-white) !important;
+        transform: scale(1.01);
     }
     
     /* Tabelas */
     .stTable tbody tr {
-        background: var(--bg-card);
-        border-bottom: 1px solid var(--border-card);
+        background: var(--bg-card) !important;
+        border-bottom: 1px solid var(--border-line) !important;
         transition: all 0.2s ease;
+        animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
     .stTable tbody tr:hover {
-        background: #252b36 !important;
+        background: #1c1c1f !important;
         cursor: pointer;
+        transform: translateX(4px);
+        box-shadow: -2px 0 12px rgba(62, 207, 158, 0.1);
     }
     
     .stTable thead {
-        background: transparent;
-        border-bottom: 2px solid var(--green-mint);
-        color: var(--green-mint);
-        font-weight: 600;
+        background: transparent !important;
+        border-bottom: 1px solid var(--border-line) !important;
+        color: var(--text-secondary) !important;
+        font-weight: 500;
+        animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s backwards;
     }
     
     /* Dividers */
     hr {
         border: none;
         height: 1px;
-        background: var(--border-card);
+        background: var(--border-line);
         margin: 20px 0;
     }
     
-    /* Alertas e Info Boxes */
-    .stAlert {
-        border-radius: 6px;
-        border-left: 3px solid var(--green-mint);
-        background: var(--bg-card);
-        border-right: 1px solid var(--border-card);
-        border-top: 1px solid var(--border-card);
-        border-bottom: 1px solid var(--border-card);
-        color: var(--text-white);
+    /* Alertas */
+    .stAlert, .stInfo, .stSuccess, .stWarning, .stError {
+        border-radius: 4px;
+        border: 1px solid var(--border-line) !important;
+        background: var(--bg-card) !important;
+        color: var(--text-white) !important;
+        animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    .stSuccess {
-        border-left-color: var(--green-mint);
-        background: var(--bg-card);
-    }
-    
-    .stInfo {
-        border-left-color: var(--green-mint);
-        background: var(--bg-card);
-    }
-    
-    .stWarning {
-        border-left-color: var(--green-mint);
-        background: var(--bg-card);
-    }
-    
-    .stError {
-        border-left-color: var(--green-mint);
-        background: var(--bg-card);
+    .stSuccess, .stInfo, .stWarning, .stError {
+        border-left: 1.5px solid var(--accent) !important;
+        animation: spinSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
     /* Spinner */
     .stSpinner {
-        color: var(--green-mint);
+        color: var(--accent) !important;
     }
     
     /* Scrollbar */
     ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
     }
     
     ::-webkit-scrollbar-track {
-        background: var(--bg-app);
+        background: transparent;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: var(--border-card);
+        background: var(--border-line);
         border-radius: 10px;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: var(--green-mint);
+        background: var(--text-secondary);
     }
     
     /* Progress bar */
     .stProgress > div > div > div > div {
-        background: var(--green-mint) !important;
+        background: linear-gradient(
+            90deg,
+            var(--accent) 0%,
+            rgba(62, 207, 158, 0.5) 50%,
+            var(--accent) 100%
+        ) !important;
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite !important;
+        height: 2px !important;
     }
     
-    /* Fade-in animation */
-    .fade-in {
-        animation: fadeIn 0.45s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(6px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Métricas e containers */
+    /* Containers e métricas */
     .stMetric > div,
     .stContainer > div {
         background: var(--bg-card) !important;
-        border: 1px solid var(--border-card) !important;
-        border-radius: 8px !important;
-        padding: 10px !important;
+        border: 1px solid var(--border-line) !important;
+        border-radius: 4px !important;
+        padding: 12px !important;
+        animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* Tabs */
-    [role="tablist"] {
-        border-bottom-color: var(--border-card);
+    .stMetric > div:hover,
+    .stContainer > div:hover {
+        border-color: rgba(62, 207, 158, 0.3) !important;
+        box-shadow: 0 8px 24px rgba(62, 207, 158, 0.08) !important;
+        background: rgba(62, 207, 158, 0.06) !important;
+        transform: translateY(-2px);
     }
-    
+
     [aria-selected="true"] {
-        border-bottom: 2px solid var(--green-mint) !important;
-        color: var(--green-mint) !important;
+        border-bottom: 1.5px solid var(--accent) !important;
+        color: var(--text-white) !important;
+        background: rgba(62, 207, 158, 0.08) !important;
+        animation: pulseGlow 2s infinite;
     }
-    
+
     [aria-selected="false"] {
         color: var(--text-secondary) !important;
+        border-bottom: 1px solid transparent !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    [aria-selected="false"]:hover {
+        color: var(--text-white) !important;
+        border-bottom: 1px solid rgba(62, 207, 158, 0.2) !important;
+    }
+    
+    [role="tab"] {
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 </style>
 """
@@ -232,15 +355,13 @@ except ImportError:
     pdfplumber = None
     PDFPLUMBER_AVAILABLE = False
 
-# --- HEADER ---
+# --- HEADER MINIMALISTA ---
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.markdown("""
-        <div style="text-align: center; padding: 30px 0;">
-            <h1 style="margin: 0; color: var(--text-white);">🚀 CONSULTA NF</h1>
-            <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--text-secondary);">
-                Sistema avançado de extração e análise de notas fiscais
-            </p>
+        <div style="text-align: center; padding: 40px 0 20px 0;">
+            <h1 style="margin: 0; font-size: 28px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-white);">CONSULTA NF</h1>
+            <p style="margin: 12px 0 0 0; font-size: 12px; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase;">Extração de Notas Fiscais</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -444,7 +565,7 @@ def extrair_dados_nf(pdf_file):
 
 st.sidebar.markdown("""
     <div style="padding: 20px 0;">
-        <h2 style="text-align: center; margin: 0; color: var(--text-white);">📤 Painel de Controle</h2>
+        <h2 style="text-align: center; margin: 0; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-white);">Painel de Controle</h2>
     </div>
 """, unsafe_allow_html=True)
 
@@ -461,18 +582,15 @@ uploaded_files = st.sidebar.file_uploader(
 # Informações adicionais na sidebar
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-    <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-left: 3px solid var(--green-mint); border-radius: 6px; padding: 15px; margin-top: 20px;">
-        <h4 style="margin-top: 0; color: var(--green-mint); font-weight: 600;">💡 Informações</h4>
-        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin: 0;">
-            <strong>Formatos:</strong> PDF<br>
-            <strong>Tamanho máximo:</strong> 200 MB<br>
-            <strong>Arquivos:</strong> Múltiplos<br>
+    <div style="padding: 15px 0;">
+        <p style="margin: 0 0 12px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">Suporta</p>
+        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+            Arquivos PDF • Até 200 MB • Processamento em lote<br>
             <br>
-            <strong>Extração:</strong><br>
-            ✓ Número da NF<br>
-            ✓ Data de emissão<br>
-            ✓ Códigos de produtos<br>
-            ✓ Código do parceiro
+            <span style="color: var(--accent);">•</span> Número da NF<br>
+            <span style="color: var(--accent);">•</span> Data de emissão<br>
+            <span style="color: var(--accent);">•</span> Códigos de produtos<br>
+            <span style="color: var(--accent);">•</span> Código do parceiro
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -488,8 +606,8 @@ if uploaded_files:
     lista_resultados = []
     progress_bar = st.progress(0)
 
-    # UX: spinner nativo durante o processamento
-    with st.spinner("⚙️ Processando arquivos, aguarde..."):
+    # UX: loader ultra-fino discreto
+    with st.spinner("Processando arquivos..."):
         for idx, file in enumerate(uploaded_files):
             dados = extrair_dados_nf(file)
             dados['Arquivo'] = file.name
@@ -500,14 +618,13 @@ if uploaded_files:
     df = pd.DataFrame(lista_resultados)
     df = df[['Arquivo', 'NF', 'Data de emissão', 'Código do produto', 'Código do parceiro']]
 
-    # Exibir os resultados organizados em abas para UX mais fluida
+    # Exibir em abas minimalistas
     st.markdown("---")
-    tab1, tab2, tab3 = st.tabs(["📋 Visão Geral dos Dados", "📊 Estatísticas e Métricas", "📥 Painel de Exportação"])
+    tab1, tab2, tab3 = st.tabs(["VISAO GERAL", "ESTATISTICAS", "EXPORTAR"])
 
-    # Aba 1: Visão Geral
+    # Aba 1: Dados
     with tab1:
-        st.markdown(f"**Total de arquivos processados:** {total_files}")
-        # Dataframe com busca e ordenação nativas, sem índice
+        st.markdown(f"**{total_files} arquivo(s) processado(s)**")
         st.dataframe(
             df,
             use_container_width=True,
@@ -516,28 +633,25 @@ if uploaded_files:
 
     # Aba 2: Estatísticas
     with tab2:
-        st.markdown("<div class='fade-in'>", unsafe_allow_html=True)
         cols = st.columns(4)
         with cols[0]:
             with st.container():
-                st.metric("Total de Arquivos", len(df))
+                st.metric("ARQUIVOS", len(df))
         with cols[1]:
             with st.container():
                 nfs_validas = len(df[df['NF'] != 'N/A'])
-                st.metric("NFs Encontradas", nfs_validas)
+                st.metric("NFS", nfs_validas)
         with cols[2]:
             with st.container():
                 produtos_total = sum(len(str(p).split('\n')) for p in df['Código do produto'] if p != 'N/A')
-                st.metric("Produtos Extraídos", produtos_total)
+                st.metric("PRODUTOS", produtos_total)
         with cols[3]:
             with st.container():
                 parceiros = len(df[df['Código do parceiro'] != 'N/A'])
-                st.metric("Parceiros Identificados", parceiros)
-        st.markdown("</div>", unsafe_allow_html=True)
+                st.metric("PARCEIROS", parceiros)
 
     # Aba 3: Exportação
     with tab3:
-        st.markdown("<div class='fade-in'>", unsafe_allow_html=True)
         col_export1, col_export2, col_export3 = st.columns(3, gap="medium")
 
         # Preparar textos/arquivos
@@ -558,17 +672,18 @@ if uploaded_files:
             workbook = writer.book
             worksheet = writer.sheets['NFs']
             header_format = workbook.add_format({
-                'bg_color': '#151b22',
-                'font_color': '#ffffff',
+                'bg_color': '#141416',
+                'font_color': '#f4f4f5',
                 'bold': True,
-                'border': 1
+                'border': 1,
+                'border_color': '#222226'
             })
             for col_num, value in enumerate(df.columns.values):
                 worksheet.write(0, col_num, value, header_format)
 
         with col_export1:
             st.download_button(
-                label="⬇️ Download TXT",
+                label="TXT",
                 data=texto_txt,
                 file_name='dados_extraidos.txt',
                 mime='text/plain',
@@ -577,7 +692,7 @@ if uploaded_files:
 
         with col_export2:
             st.download_button(
-                label="⬇️ Download CSV",
+                label="CSV",
                 data=csv,
                 file_name='dados_extraidos.csv',
                 mime='text/csv',
@@ -586,14 +701,12 @@ if uploaded_files:
 
         with col_export3:
             st.download_button(
-                label="⬇️ Download Excel",
+                label="EXCEL",
                 data=buffer.getvalue(),
                 file_name='dados_extraidos.xlsx',
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 use_container_width=True
             )
-
-        st.markdown("</div>", unsafe_allow_html=True)
 
 else:
     # Interface quando nenhum arquivo é carregado
@@ -602,28 +715,27 @@ else:
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.info("""
-            ### 📚 Como Usar:
+            **Como Usar:**
             
-            **1️⃣ Painel Lateral** → Acesse o menu à esquerda  
-            **2️⃣ Selecione PDFs** → Clique em "Arraste ou clique"  
-            **3️⃣ Processamento** → O sistema analisa automaticamente  
-            **4️⃣ Exporte** → Escolha TXT, CSV ou Excel  
+            1. Acesse o painel lateral
+            2. Selecione seus arquivos PDF
+            3. O sistema processa automaticamente
+            4. Exporte em TXT, CSV ou Excel
         """)
         
         st.success("""
-            💡 **Dica:** Você pode fazer upload de múltiplos PDFs simultaneamente para processamento em lote!
+            **Dica:** Você pode fazer upload de múltiplos PDFs simultaneamente.
         """)
 
 # ============================================================================
-# FOOTER
+# FOOTER MINIMALISTA
 # ============================================================================
 
 st.markdown("---")
 st.markdown("""
-    <div style="text-align: center; padding: 20px 0; color: var(--text-secondary);">
-        <p style="margin: 0; font-size: 12px;">
-            🔧 <strong>Make Distribuidora</strong> • Projeto ConsultaNF • Versão 2.0<br>
-            Powered by Streamlit + Python
+    <div style="text-align: center; padding: 20px 0;">
+        <p style="margin: 0; font-size: 11px; letter-spacing: 0.05em; color: var(--text-secondary);">
+            Make Distribuidora • ConsultaNF • 2.0
         </p>
     </div>
 """, unsafe_allow_html=True)
