@@ -37,9 +37,93 @@ FUTURISTIC_CSS = """
         }
     }
     
-    @keyframes shimmer {
-        0% { background-position: -1000px 0; }
-        100% { background-position: 1000px 0; }
+    @keyframes auroraAmbient {
+        0% {
+            background-position: 0% 50%;
+            background-size: 200% 200%;
+        }
+        25% {
+            background-position: 50% 50%;
+            background-size: 210% 210%;
+        }
+        50% {
+            background-position: 100% 50%;
+            background-size: 200% 200%;
+        }
+        75% {
+            background-position: 50% 0%;
+            background-size: 210% 210%;
+        }
+        100% {
+            background-position: 0% 50%;
+            background-size: 200% 200%;
+        }
+    }
+    
+    @keyframes shimmerSwipe {
+        0% {
+            background-position: -1200px 0;
+        }
+        100% {
+            background-position: 1200px 0;
+        }
+    }
+    
+    @keyframes shimmerText {
+        0% {
+            background-position: -2000px 0;
+        }
+        100% {
+            background-position: 2000px 0;
+        }
+    }
+    
+    @keyframes shimmerButton {
+        0% {
+            left: -100%;
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            left: 100%;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes breathingPulse {
+        0%, 100% {
+            box-shadow: inset 0 0 0 1px rgba(62, 207, 158, 0.2), 0 0 8px rgba(62, 207, 158, 0.08);
+        }
+        50% {
+            box-shadow: inset 0 0 0 1px rgba(62, 207, 158, 0.4), 0 0 16px rgba(62, 207, 158, 0.16);
+        }
+    }
+    
+    @keyframes elasticPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(62, 207, 158, 0.08), inset 0 0 0 1px rgba(62, 207, 158, 0.15);
+        }
+        50% {
+            transform: scale(1.03);
+            box-shadow: 0 0 24px 4px rgba(62, 207, 158, 0.12), inset 0 0 0 2px rgba(62, 207, 158, 0.25);
+        }
+    }
+    
+    @keyframes rippleWave {
+        0% {
+            background-color: var(--bg-card);
+            box-shadow: inset 0 0 0 0 rgba(62, 207, 158, 0);
+        }
+        50% {
+            box-shadow: inset 0 0 0 4px rgba(62, 207, 158, 0.06);
+        }
+        100% {
+            background-color: #1c1c1f;
+            box-shadow: inset 0 0 0 0 rgba(62, 207, 158, 0);
+        }
     }
     
     @keyframes slideInLeft {
@@ -61,6 +145,21 @@ FUTURISTIC_CSS = """
         to {
             opacity: 1;
             transform: translateX(0);
+        }
+    }
+    
+    @keyframes scaleInBouncy {
+        0% {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+        60% {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
         }
     }
     
@@ -106,6 +205,15 @@ FUTURISTIC_CSS = """
         }
     }
     
+    @keyframes floatLift {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+        }
+        50% {
+            transform: translateY(-2px) scale(1.001);
+        }
+    }
+    
     @keyframes glowBorder {
         0%, 100% {
             border-color: var(--border-line);
@@ -117,9 +225,13 @@ FUTURISTIC_CSS = """
         }
     }
     
-    /* Background */
+    /* Background com Aurora Ambient */
     body, .stApp, [data-testid="stAppViewContainer"] {
         background: var(--bg-app) !important;
+        background-image: 
+            radial-gradient(circle at 20% 50%, rgba(62, 207, 158, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(62, 207, 158, 0.03) 0%, transparent 60%) !important;
+        animation: auroraAmbient 16s ease-in-out infinite !important;
         color: var(--text-white) !important;
     }
     
@@ -128,17 +240,71 @@ FUTURISTIC_CSS = """
         color: var(--text-white);
     }
     
-    /* Títulos */
+    /* Títulos - Cascata em carregamento */
     h1, h2, h3, h4, h5, h6 {
         color: var(--text-white) !important;
         font-weight: 500;
         letter-spacing: 0.05em;
+        animation: fadeInSlide 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
-    /* Sidebar */
+    h1 {
+        animation-delay: 0s;
+    }
+    
+    h2 {
+        animation-delay: 0.1s;
+    }
+    
+    h3 {
+        animation-delay: 0.2s;
+    }
+    
+    h4 {
+        animation-delay: 0.3s;
+    }
+    
+    h5 {
+        animation-delay: 0.4s;
+    }
+    
+    h6 {
+        animation-delay: 0.5s;
+    }
+    
+    /* Sidebar com Glassmorphism Avançado */
     [data-testid="stSidebar"] {
-        background: var(--bg-sidebar) !important;
+        background: rgba(9, 9, 11, 0.75) !important;
+        backdrop-filter: blur(16px);
         border-right: 1px solid var(--border-line);
+        -webkit-backdrop-filter: blur(16px);
+    }
+    
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] > div > div > div > p,
+    [data-testid="stSidebar"] > div > div > div > span {
+        animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    [data-testid="stSidebar"] h2 {
+        animation-delay: 0.05s;
+    }
+    
+    [data-testid="stSidebar"] h3 {
+        animation-delay: 0.15s;
+    }
+    
+    [data-testid="stSidebar"] > div > div > div > div:nth-child(1) {
+        animation-delay: 0.25s;
+    }
+    
+    [data-testid="stSidebar"] > div > div > div > div:nth-child(2) {
+        animation-delay: 0.35s;
+    }
+    
+    [data-testid="stSidebar"] > div > div > div > div:nth-child(n+3) {
+        animation-delay: 0.45s;
     }
     
     /* Markdown text */
@@ -146,7 +312,7 @@ FUTURISTIC_CSS = """
         color: var(--text-white) !important;
     }
     
-    /* Botões */
+    /* Botões - Com efeito de brilho de varredura */
     .stButton > button {
         background: transparent !important;
         border: 1px solid var(--border-line) !important;
@@ -156,6 +322,25 @@ FUTURISTIC_CSS = """
         font-weight: 500;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         animation: fadeInSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stButton > button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     .stButton > button:hover {
@@ -166,11 +351,16 @@ FUTURISTIC_CSS = """
         box-shadow: 0 8px 24px rgba(62, 207, 158, 0.16);
     }
     
-    .stButton > button:active {
-        transform: scale(0.98) translateY(0);
+    .stButton > button:hover::after {
+        opacity: 1;
+        animation: shimmerButton 0.6s ease-in-out;
     }
     
-    /* Download buttons */
+    .stButton > button:active {
+        transform: scale(0.95) translateY(0);
+    }
+    
+    /* Download buttons - Com efeito de brilho */
     [data-testid="stDownloadButton"] > button {
         background: transparent !important;
         border: 1px solid var(--border-line) !important;
@@ -179,6 +369,25 @@ FUTURISTIC_CSS = """
         border-radius: 4px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    [data-testid="stDownloadButton"] > button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     [data-testid="stDownloadButton"] > button:hover {
@@ -189,11 +398,16 @@ FUTURISTIC_CSS = """
         box-shadow: 0 8px 24px rgba(62, 207, 158, 0.16);
     }
     
-    [data-testid="stDownloadButton"] > button:active {
-        transform: scale(0.98) translateY(0);
+    [data-testid="stDownloadButton"] > button:hover::after {
+        opacity: 1;
+        animation: shimmerButton 0.6s ease-in-out;
     }
     
-    /* Inputs */
+    [data-testid="stDownloadButton"] > button:active {
+        transform: scale(0.95) translateY(0);
+    }
+    
+    /* Inputs - Com efeito de respiração e expansão de foco */
     .stTextInput > div > div > input,
     .stSelectbox > div > div > select,
     .stFileUploader > div > div > input {
@@ -205,6 +419,7 @@ FUTURISTIC_CSS = """
         font-size: 14px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+        position: relative;
     }
     
     .stTextInput > div > div > input:focus,
@@ -212,24 +427,41 @@ FUTURISTIC_CSS = """
     .stFileUploader > div > div > input:focus {
         border-color: var(--accent) !important;
         background: var(--bg-card) !important;
-        box-shadow: inset 0 0 0 1px rgba(62, 207, 158, 0.18), 0 0 12px rgba(62, 207, 158, 0.12) !important;
         color: var(--text-white) !important;
         transform: scale(1.01);
+        animation: breathingPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
     }
     
-    /* Tabelas */
+    /* Tabelas - Com efeito de ondulação */
     .stTable tbody tr {
         background: var(--bg-card) !important;
         border-bottom: 1px solid var(--border-line) !important;
-        transition: all 0.2s ease;
+        transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stTable tbody tr::before {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: transparent;
+        transition: background-color 0.3s ease;
     }
     
     .stTable tbody tr:hover {
-        background: #1c1c1f !important;
+        animation: rippleWave 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         cursor: pointer;
         transform: translateX(4px);
         box-shadow: -2px 0 12px rgba(62, 207, 158, 0.1);
+    }
+    
+    .stTable tbody tr:hover::before {
+        background: var(--accent);
     }
     
     .stTable thead {
@@ -238,6 +470,31 @@ FUTURISTIC_CSS = """
         color: var(--text-secondary) !important;
         font-weight: 500;
         animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s backwards;
+    }
+    
+    /* Cascata de linhas da tabela */
+    .stTable tbody tr:nth-child(1) {
+        animation-delay: 0.05s !important;
+    }
+    
+    .stTable tbody tr:nth-child(2) {
+        animation-delay: 0.1s !important;
+    }
+    
+    .stTable tbody tr:nth-child(3) {
+        animation-delay: 0.15s !important;
+    }
+    
+    .stTable tbody tr:nth-child(4) {
+        animation-delay: 0.2s !important;
+    }
+    
+    .stTable tbody tr:nth-child(5) {
+        animation-delay: 0.25s !important;
+    }
+    
+    .stTable tbody tr:nth-child(n+6) {
+        animation-delay: 0.3s !important;
     }
     
     /* Dividers */
@@ -287,7 +544,7 @@ FUTURISTIC_CSS = """
         background: var(--text-secondary);
     }
     
-    /* Progress bar */
+    /* Progress bar com Super-Glow Incandescente */
     .stProgress > div > div > div > div {
         background: linear-gradient(
             90deg,
@@ -296,11 +553,50 @@ FUTURISTIC_CSS = """
             var(--accent) 100%
         ) !important;
         background-size: 1000px 100%;
-        animation: shimmer 2s infinite !important;
+        animation: shimmerSwipe 2s infinite !important;
         height: 2px !important;
+        box-shadow: 0 0 20px var(--accent), 0 0 8px rgba(62, 207, 158, 0.6) !important;
     }
     
-    /* Containers e métricas */
+    /* Spinner com Elasticidade */
+    .stSpinner {
+        color: var(--accent) !important;
+        animation: scaleInBouncy 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+    }
+    
+    /* File Uploader Magnético e Reativo */
+    .stFileUploader > div {
+        background: var(--bg-card) !important;
+        border: 2px dashed var(--border-line) !important;
+        border-radius: 8px;
+        padding: 32px 16px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: elasticPulse 3s ease-in-out infinite;
+        position: relative;
+    }
+    
+    .stFileUploader > div:hover {
+        border-color: var(--accent) !important;
+        transform: scale(1.02);
+        box-shadow: 
+            0 0 24px rgba(62, 207, 158, 0.2),
+            inset 0 0 0 2px rgba(62, 207, 158, 0.15) !important;
+    }
+    
+    .stFileUploader > div::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        background: radial-gradient(circle at center, rgba(62, 207, 158, 0.02), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .stFileUploader > div:hover::before {
+        opacity: 1;
+    }
+    /* Containers e métricas - Com efeito de flutuação magnética */
     .stMetric > div,
     .stContainer > div {
         background: var(--bg-card) !important;
@@ -309,14 +605,43 @@ FUTURISTIC_CSS = """
         padding: 12px !important;
         animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+    
+    /* Cascata para métricas */
+    .stMetric:nth-child(1) > div,
+    .stContainer:nth-child(1) > div {
+        animation-delay: 0.3s;
+    }
+    
+    .stMetric:nth-child(2) > div,
+    .stContainer:nth-child(2) > div {
+        animation-delay: 0.4s;
+    }
+    
+    .stMetric:nth-child(3) > div,
+    .stContainer:nth-child(3) > div {
+        animation-delay: 0.5s;
+    }
+    
+    .stMetric:nth-child(4) > div,
+    .stContainer:nth-child(4) > div {
+        animation-delay: 0.6s;
+    }
+    
+    .stMetric:nth-child(n+5) > div,
+    .stContainer:nth-child(n+5) > div {
+        animation-delay: 0.7s;
     }
     
     .stMetric > div:hover,
     .stContainer > div:hover {
         border-color: rgba(62, 207, 158, 0.3) !important;
-        box-shadow: 0 8px 24px rgba(62, 207, 158, 0.08) !important;
+        box-shadow: 0 12px 32px rgba(62, 207, 158, 0.12), inset 0 0 0 1px rgba(62, 207, 158, 0.1) !important;
         background: rgba(62, 207, 158, 0.06) !important;
-        transform: translateY(-2px);
+        transform: translateY(-4px) scale(1.01);
+        filter: brightness(1.05);
+        animation: floatLift 2s ease-in-out infinite;
     }
 
     [aria-selected="true"] {
@@ -342,6 +667,44 @@ FUTURISTIC_CSS = """
         letter-spacing: 0.02em;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    
+    /* Feedback Cinemático - Abas com Sequência */
+    [role="tabpanel"] {
+        animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    [role="tabpanel"]:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    [role="tabpanel"]:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    [role="tabpanel"]:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    
+    /* Cards de Métricas com Cascata Cinemática */
+    .stMetric {
+        animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .stMetric:nth-child(1) {
+        animation-delay: 0.4s;
+    }
+    
+    .stMetric:nth-child(2) {
+        animation-delay: 0.5s;
+    }
+    
+    .stMetric:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+    
+    .stMetric:nth-child(4) {
+        animation-delay: 0.7s;
+    }
 </style>
 """
 
@@ -355,13 +718,37 @@ except ImportError:
     pdfplumber = None
     PDFPLUMBER_AVAILABLE = False
 
-# --- HEADER MINIMALISTA ---
+# --- HEADER MINIMALISTA COM TÍTULO METÁLICO ---
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.markdown("""
         <div style="text-align: center; padding: 40px 0 20px 0;">
-            <h1 style="margin: 0; font-size: 28px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-white);">CONSULTA NF</h1>
-            <p style="margin: 12px 0 0 0; font-size: 12px; letter-spacing: 0.08em; color: var(--text-secondary); text-transform: uppercase;">Extração de Notas Fiscais</p>
+            <h1 style="
+                margin: 0;
+                font-size: 28px;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--text-white);
+                background: linear-gradient(
+                    90deg,
+                    var(--accent),
+                    #ffffff,
+                    var(--accent)
+                );
+                background-size: 200% 100%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: shimmerText 4s linear infinite;
+            ">CONSULTA NF</h1>
+            <p style="
+                margin: 12px 0 0 0;
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                animation: fadeInSlide 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+            ">Extração de Notas Fiscais</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -560,12 +947,22 @@ def extrair_dados_nf(pdf_file):
 
 
 # ============================================================================
-# SEÇÃO DE UPLOAD - SIDEBAR
+# SEÇÃO DE UPLOAD - SIDEBAR COM GLASSMORPHISM
 # ============================================================================
 
 st.sidebar.markdown("""
-    <div style="padding: 20px 0;">
-        <h2 style="text-align: center; margin: 0; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-white);">Painel de Controle</h2>
+    <div style="
+        padding: 20px 0;
+        animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s backwards;
+    ">
+        <h2 style="
+            text-align: center;
+            margin: 0;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-white);
+        "> Painel de Controle</h2>
     </div>
 """, unsafe_allow_html=True)
 
@@ -582,9 +979,24 @@ uploaded_files = st.sidebar.file_uploader(
 # Informações adicionais na sidebar
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-    <div style="padding: 15px 0;">
-        <p style="margin: 0 0 12px 0; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">Suporta</p>
-        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+    <div style="
+        padding: 15px 0;
+        animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+    ">
+        <p style="
+            margin: 0 0 12px 0;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 500;
+        ">Suporta</p>
+        <p style="
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0;
+        ">
             Arquivos PDF • Até 200 MB • Processamento em lote<br>
             <br>
             <span style="color: var(--accent);">•</span> Número da NF<br>
@@ -606,8 +1018,8 @@ if uploaded_files:
     lista_resultados = []
     progress_bar = st.progress(0)
 
-    # UX: loader ultra-fino discreto
-    with st.spinner("Processando arquivos..."):
+    # UX: loader ultra-fino discreto com animação elástica
+    with st.spinner("🔄 Processando arquivos..."):
         for idx, file in enumerate(uploaded_files):
             dados = extrair_dados_nf(file)
             dados['Arquivo'] = file.name
@@ -618,39 +1030,45 @@ if uploaded_files:
     df = pd.DataFrame(lista_resultados)
     df = df[['Arquivo', 'NF', 'Data de emissão', 'Código do produto', 'Código do parceiro']]
 
-    # Exibir em abas minimalistas
+    # Exibir em abas minimalistas com feedback cinemático
     st.markdown("---")
-    tab1, tab2, tab3 = st.tabs(["VISAO GERAL", "ESTATISTICAS", "EXPORTAR"])
+    tab1, tab2, tab3 = st.tabs([" VISÃO GERAL", " ESTATÍSTICAS", " EXPORTAR"])
 
-    # Aba 1: Dados
+    # Aba 1: Dados com animação
     with tab1:
-        st.markdown(f"**{total_files} arquivo(s) processado(s)**")
+        st.markdown(f"""
+            <div style="animation: scaleInBouncy 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;">
+                <p style="font-size: 14px; color: var(--text-white); font-weight: 500;">
+                    <span style="color: var(--accent);">✓</span> <strong>{total_files} arquivo(s) processado(s)</strong>
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
         st.dataframe(
             df,
             use_container_width=True,
             hide_index=True,
         )
 
-    # Aba 2: Estatísticas
+    # Aba 2: Estatísticas com cascata
     with tab2:
         cols = st.columns(4)
         with cols[0]:
             with st.container():
-                st.metric("ARQUIVOS", len(df))
+                st.metric("ARQUIVOS", len(df), delta=None)
         with cols[1]:
             with st.container():
                 nfs_validas = len(df[df['NF'] != 'N/A'])
-                st.metric("NFS", nfs_validas)
+                st.metric("NFS", nfs_validas, delta=None)
         with cols[2]:
             with st.container():
                 produtos_total = sum(len(str(p).split('\n')) for p in df['Código do produto'] if p != 'N/A')
-                st.metric("PRODUTOS", produtos_total)
+                st.metric("PRODUTOS", produtos_total, delta=None)
         with cols[3]:
             with st.container():
                 parceiros = len(df[df['Código do parceiro'] != 'N/A'])
-                st.metric("PARCEIROS", parceiros)
+                st.metric("PARCEIROS", parceiros, delta=None)
 
-    # Aba 3: Exportação
+    # Aba 3: Exportação com feedback de clique
     with tab3:
         col_export1, col_export2, col_export3 = st.columns(3, gap="medium")
 
@@ -683,7 +1101,7 @@ if uploaded_files:
 
         with col_export1:
             st.download_button(
-                label="TXT",
+                label=" TXT",
                 data=texto_txt,
                 file_name='dados_extraidos.txt',
                 mime='text/plain',
@@ -692,7 +1110,7 @@ if uploaded_files:
 
         with col_export2:
             st.download_button(
-                label="CSV",
+                label=" CSV",
                 data=csv,
                 file_name='dados_extraidos.csv',
                 mime='text/csv',
@@ -701,7 +1119,7 @@ if uploaded_files:
 
         with col_export3:
             st.download_button(
-                label="EXCEL",
+                label=" EXCEL",
                 data=buffer.getvalue(),
                 file_name='dados_extraidos.xlsx',
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -709,13 +1127,13 @@ if uploaded_files:
             )
 
 else:
-    # Interface quando nenhum arquivo é carregado
+    # Interface quando nenhum arquivo é carregado com animação
     st.markdown("---")
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.info("""
-            **Como Usar:**
+             Como Usar:
             
             1. Acesse o painel lateral
             2. Selecione seus arquivos PDF
@@ -724,18 +1142,27 @@ else:
         """)
         
         st.success("""
-            **Dica:** Você pode fazer upload de múltiplos PDFs simultaneamente.
+             Dica: Você pode fazer upload de múltiplos PDFs simultaneamente.
         """)
 
 # ============================================================================
-# FOOTER MINIMALISTA
+# FOOTER MINIMALISTA COM ANIMAÇÃO
 # ============================================================================
 
 st.markdown("---")
 st.markdown("""
-    <div style="text-align: center; padding: 20px 0;">
-        <p style="margin: 0; font-size: 11px; letter-spacing: 0.05em; color: var(--text-secondary);">
-            Make Distribuidora • ConsultaNF • 2.0
+    <div style="
+        text-align: center;
+        padding: 20px 0;
+        animation: fadeInSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    ">
+        <p style="
+            margin: 0;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        ">
+            Make Distribuidora • ConsultaNF • 2.0 
         </p>
     </div>
 """, unsafe_allow_html=True)
